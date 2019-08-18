@@ -1,0 +1,111 @@
+<!-- ============================================================== -->
+<!-- sidebar -->
+<!-- ============================================================== -->
+ <div class="user-profile" style="background: url(assets/images/background/user-info.jpg) no-repeat;">
+    <!-- User profile image -->
+    <div class="profile-img"> <img src="assets/images/users/profile.png" alt="user"> </div>
+    <!-- User profile text-->
+    <!-- ============================================================== -->
+    <!-- Profile - style you can find in header.scss -->
+    <!-- ============================================================== -->
+    <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class=""> Markarn Doe <i class="ti-angle-down font-12 m-l-5"></i></a></div>
+    <mat-menu #sdprofile="matMenu" class="mymegamenu">
+        <button mat-menu-item>
+            <mat-icon>settings</mat-icon> Settings </button>
+        <button mat-menu-item>
+            <mat-icon>account_box</mat-icon> Profile </button>
+        <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon> Disable notifications </button>
+        <button mat-menu-item>
+            <mat-icon>exit_to_app</mat-icon> Sign Out </button>
+    </mat-menu>
+    
+</div>
+<!-- <mat-nav-list appAccordion>
+    Menu item for loop
+    <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected" group="{{menuitem.state}}">
+        
+        <a class="" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+            <mat-icon>{{ menuitem.icon }}</mat-icon> 
+            <span>{{ menuitem.name }}</span> 
+            <span fxFlex></span> 
+            <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span> 
+        </a>
+
+        
+    </mat-list-item>
+
+</mat-nav-list> -->
+
+<mat-nav-list>
+    <!-- wrap all the nav items in an accordion panel -->
+    <mat-accordion [displayMode]="flat">
+      <div *ngFor="let navItem of navList">
+
+        <!-- use a simple div for an item that has no children,
+          match up the styling to the expansion panel styles -->
+        <div class="nav-head" *ngIf="navItem.pages.length === 0">
+          <a class="nav-link"
+            [routerLink]="navItem.link"
+            routerLinkActive="selected"
+            (click)="closeSidenav()">
+            <mat-icon>{{navItem.icon}}</mat-icon>
+            <span class="nav-link-text">{{navItem.heading}}</span>
+          </a>
+        </div>
+
+        <!-- use expansion panel for heading item with sub page links -->
+        <mat-expansion-panel *ngIf="navItem.pages.length > 0"
+          class="mat-elevation-z0">
+          <mat-expansion-panel-header class="nav-head" [expandedHeight]="'48px'">
+            <mat-panel-title class="nav-link">
+              <mat-icon>{{navItem.icon}}</mat-icon>
+              <span class="nav-link-text">{{navItem.heading}}</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <!------------------------------------------------------------------------->
+          <mat-nav-list>
+                <!-- wrap all the nav items in an accordion panel -->
+                <!-- {{navItem | json}} -->
+                <mat-accordion [displayMode]="flat">
+                  <div *ngFor="let subItem of navItem.pages">
+                    <!-- use a simple div for an item that has no children,
+                      match up the styling to the expansion panel styles -->
+                    <div class="nav-head" *ngIf="subItem?.pages?.length === 0">
+                      <a class="nav-link"
+                        [routerLink]="subItem?.link"
+                        routerLinkActive="selected"
+                        (click)="closeSidenav()">
+                        <mat-icon>{{subItem?.icon}}</mat-icon>
+                        <span class="nav-link-text">{{subItem?.heading}}</span>
+                      </a>
+                    </div>
+            
+                    <!-- use expansion panel for heading item with sub page links -->
+                    <mat-expansion-panel *ngIf="subItem?.pages?.length > 0"
+                      class="mat-elevation-z0">
+                      <mat-expansion-panel-header class="nav-head" [expandedHeight]="'48px'">
+                        <mat-panel-title class="nav-link">
+                          <span class="nav-link-text">{{subItem?.heading}}</span>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+            
+                      <div class="nav-section">
+                        <div *ngFor="let subSubItem of subItem.pages"
+                          class="nav-item">
+                          <a class="nav-link"
+                            [routerLink]="['/table']"
+                            routerLinkActive="selected"
+                            (click)="closeSidenav()">{{subSubItem.heading}}</a>
+                        </div>
+                      </div>
+                    </mat-expansion-panel>
+                  </div>
+                </mat-accordion>
+              </mat-nav-list>
+          <!---------------------------------------------------------------------------->
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+  </mat-nav-list>
